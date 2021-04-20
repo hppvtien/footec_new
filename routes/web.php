@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\GroupPermissionsController;
 /*
@@ -48,7 +49,7 @@ Route::group([
     'prefix' => 'group'
 
 ], function () {
-    Route::get('/list', [GroupsController::class, 'index'])->name('group.list');
+    Route::get('/', [GroupsController::class, 'index'])->name('group.list');
     Route::get('/add', [GroupsController::class, 'addGetGroup']);
     Route::post('/add', [GroupsController::class, 'addPostGroup'])->name('group.add');
     Route::get('/edit/{id}', [GroupsController::class, 'editGetGroup']);
@@ -60,7 +61,7 @@ Route::group([
     'middleware' => 'auth',
     'prefix' => 'group_permission'
 ], function () {
- Route::get('/list', [GroupPermissionsController::class, 'index'])->name('group_pers.list');
+ Route::get('/', [GroupPermissionsController::class, 'index'])->name('group_pers.list');
  Route::get('/add', [GroupPermissionsController::class, 'addGetGroupPers']);
  Route::post('/add', [GroupPermissionsController::class, 'addPostGroupPers'])->name('group_pers.add');
  Route::get('/edit/{id}', [GroupPermissionsController::class, 'editGetGroupPers']);
