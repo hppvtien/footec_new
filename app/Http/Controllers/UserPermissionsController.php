@@ -3,38 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\user_permissions;
 use App\Models\users;
 use DataTables;
 use Carbon\Carbon;
-class UserController extends Controller
+class UserPermissionsController extends Controller
 {
     public function index(Request $request)
     {
-
+       
         if ($request->ajax()) {
-            $data = Users::get();
+            $data = User_permissions::get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($data){
-                    $actionBtn = '<a href="' . route('user.edit', $data->id) . '" class="edit btn btn-success btn-sm">Edit</a>
-                    <a href="' . route('user.delete', $data->id) . '" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $actionBtn = '<a href="' . route('user_pers.edit', $data->id) . '" class="edit btn btn-success btn-sm">Edit</a> 
+                    <a href="' . route('user_pers.delete', $data->id) . '" class="delete btn btn-danger btn-sm">Delete</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('backend.users.list');
+        return view('backend.user_permissions.list');
     }
-    public function addGetUser()
+    public function addGetUserPers()
     {
         // $user = users::where('is_active',1)->get()->pluck('name','id');
-        // return view('backend.users.add',compact('user'));
+        // return view('backend.user_permissions.add',compact('user'));
         // $user = users::where('is_active',1)->get()->pluck('name','id');
-        return view('backend.users.add');
+        return view('backend.user_permissions.add');
     }
 
     // Store Contact Form data
-    public function addPostUser(Request $request)
+    public function addPostUserPers(Request $request)
     {
         // $data = $request;
         // Form validation
@@ -46,35 +47,35 @@ class UserController extends Controller
             'user_id' => $request->user_id,
             'model_name' => $request->model_name,
             'perms' => json_encode($request->perms),
-        ];
-        Users::create($data);
+        ];      
+        User_permissions::create($data);
             return redirect()->route('user_pers.list');
     }
 
-    public function editGetUser($id)
+    public function editGetUserPers($id)
     {
         // $group = groups::where('is_active',1)->get()->pluck('name','id');
-        $Users = Users::first();
+        $user_permissions = User_permissions::first();
 // dd(json_decode($group_permissions->perms));
-        return view('backend.users.edit', compact('users'));
+        return view('backend.user_permissions.edit', compact('user_permissions'));
     }
-    public function editPostUser(Request $request, $id)
+    public function editPostUserPers(Request $request, $id)
     {
-
-        $data = Users::where('id', $id)->first();
+       
+        $data = User_permissions::where('id', $id)->first();
         $data->model_name = $request->model_name;
         $data->perms = json_encode($request->perms);
-        $data->user_id = $request->user_id;
+        $data->user_id = $request->user_id;      
         $data->updated_at = Carbon::now();
         // dd($request->is_active);
         $data->save();
-
-        return redirect()->route('user.list');
+        
+        return redirect()->route('user_pers.list');
     }
-    public function deleteUser($id)
+    public function deleteUserPers($id)
     {
-        Users::destroy($id);
-        return redirect()->route('user.list');
+        user_permissions::destroy($id);
+        return redirect()->route('user_pers.list');
 
     }
 }

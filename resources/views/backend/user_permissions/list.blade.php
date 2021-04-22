@@ -30,7 +30,7 @@
                                 <h3 class="card-title">Danh sách group</h3>
                             </div>
                             <div class="col-4">
-                                <a href="{{ route('user.add') }}" class="btn btn-block btn-primary btn-lg">Thêm mới</a>
+                                <a href="{{ route('user_pers.add') }}" class="btn btn-block btn-primary btn-lg">Thêm mới</a>
                             </div>
                         </div>
 
@@ -49,19 +49,21 @@
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">#ID</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">User name</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Full name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">User ID</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Model Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Perms</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                           
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th rowspan="1" colspan="1">#ID</th>
-                                                <th rowspan="1" colspan="1">User name</th>
-                                                <th rowspan="1" colspan="1">Full name</th>
+                                                <th rowspan="1" colspan="1">User id</th>
+                                                <th rowspan="1" colspan="1">Model name</th>
+                                                <th rowspan="1" colspan="1">Permissions</th>
                                                 <th rowspan="1" colspan="1">Action</th>
                                             </tr>
                                         </tfoot>
@@ -104,15 +106,16 @@
     var table = $('.yajra-datatable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('admins.list') }}",
+        ajax: "{{ route('user_pers.list') }}",
         columns: [
             {data: 'id', name: 'id'},
-            {data: 'user_name', name: 'user_name'},
-            {data: 'full_name', name: 'full_name'},
+            {data: 'user_id', name: 'user_id'},
+            {data: 'model_name', name: 'model_name'},
+            {data: 'perms', name: 'perms'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
-
+    
   });
 </script>
 @endsection

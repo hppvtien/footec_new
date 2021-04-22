@@ -35,22 +35,45 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ route('group.list') }}" class="nav-link active">
+            <a href="{{ route('user.list') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Quản lý user
               </p>
             </a>
+          </li><li class="nav-item">
+            <a href="{{ route('group.list') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Quản lý group
+              </p>
+            </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('group_pers.list') }}" class="nav-link active">
+            <a href="{{ route('group_pers.list') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Quản lý Permissions
               </p>
             </a>
           </li>
-          
+          <li class="nav-item">
+            <a href="{{ route('admins.list') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Quản lý Admin
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('user_pers.list') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Quản lý User Permissions
+              </p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

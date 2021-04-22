@@ -1,5 +1,5 @@
 @extends('backend.layouts.app')
-@section('action','Sửa')
+@section('action','Thêm mới')
 @section('content')
 <section class="content">
   <div class="container-fluid">
@@ -9,7 +9,7 @@
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Sửa Permissions</h3>
+            <h3 class="card-title">Thêm mới User Permissions</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -18,22 +18,23 @@
             @csrf
             <div class="card-body">
               <div class="form-group">
-                <label for="exampleInputEmail1">Chọn group</label>
-                <select class="custom-select form-control-border border-width-2" name="group_id" id="exampleSelectBorderWidth2">
-                  <option>Vui lòng chọn group</option>
-                  @foreach($group as $key => $value)
-                  <option value="{{ $key }}" {{ $key = $group_permissions->group_id ? 'selected' : '' }}>{{ $value }}</option>
-                  @endforeach
+                <label for="user_id">User</label>
+                <select class="custom-select form-control-border border-width-2" data-placeholder="Chọn User" name="user_id" id="user_id">
+                  <option value="" disabled selected>Vui lòng chọn User</option>
+                  <option value="1">admin1</option>
+                  <option value="2">admin2</option>
+                  <option value="3">admin3</option>
                 </select>
 
               </div>
               <div class="form-group">
-                <label>Multiple</label>
-                <select class="custom-select form-control-border border-width-2" name="model_name" data-placeholder="Chọn model name" style="width: 100%;">
-                  <option value="Alabama" {{ $group_permissions->model_name == 'Alabama' ? 'selected':'' }}>Alabama</option>
-                  <option value="Alaska" {{ $group_permissions->model_name == 'Alaska' ? 'selected':'' }}>Alaska</option>
-                  <option value="California" {{ $group_permissions->model_name == 'California' ? 'selected':'' }}>California</option>
-                  <option value="Delaware" {{ $group_permissions->model_name == 'Delaware' ? 'selected':'' }}>Delaware</option>
+                <label for="model_name">Model name</label>
+                <select class="custom-select form-control-border border-width-2" name="model_name" id="model_name" data-placeholder="Select a State" style="width: 100%;">
+                  <option value="" disabled selected>Vui lòng chọn Model</option>
+                  <option value="Alabama">Alabama</option>
+                  <option value="Alaska">Alaska</option>
+                  <option value="California">California</option>
+                  <option value="Delaware">Delaware</option>
                 </select>
               </div>
               <div class="panel-body">
@@ -42,22 +43,22 @@
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="perms" value="view" {{ array_search('view',json_decode($group_permissions->perms,true)) == 0 ? 'checked':'' }}>
+                    <input type="checkbox" name="perms" value="view">
                     Xem</label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="perms" value="add" {{ array_search('add',json_decode($group_permissions->perms,true)) == 1 ? 'checked':'' }}>
+                    <input type="checkbox" name="perms" value="add">
                     Thêm</label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="perms" value="edit" {{ array_search('edit',json_decode($group_permissions->perms,true)) == 2 ? 'checked':'' }}>
+                    <input type="checkbox" name="perms" value="edit">
                     Sửa</label>
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="perms" value="delete" {{ array_search('delete',json_decode($group_permissions->perms,true)) == 3 ? 'checked':'' }}>
+                    <input type="checkbox" name="perms" value="delete">
                     Xóa</label>
                 </div>
               </div>
@@ -88,7 +89,7 @@
     $('#submit').click(function() {
       var token = $('meta[name="csrf-token"]').attr('content');
       let model_name = $('select[name=model_name]').val();
-      let group_id = $('select[name=group_id]').val();
+      let user_id = $('select[name=user_id]').val();
       let perms = [];
       $.each($("input[name='perms']:checked"), function() {
         perms.push($(this).val());
@@ -97,17 +98,17 @@
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        url: "{{ route('group_pers.edit',$group_permissions->id) }}",
+        url: "{{ route('user_pers.add') }}",
         type: "post",
         dataType: "json",
         data: {
           model_name: model_name,
-          group_id: group_id,
-          perms: perms,
+          user_id: user_id,
+          perms: perms
         },
         success: function(data) {
-          alert('Sửa thành công!!!')
-          window.location.href = "{{ route('group_pers.list') }}";
+          alert('Thêm mới thành công!!!')
+          window.location.href = "{{ route('user_pers.list') }}";
         }
       });
     });

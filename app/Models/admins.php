@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class admins extends Model
 {
     use HasFactory;
+    public $fillable = ['user_name', 'full_name'];
 }

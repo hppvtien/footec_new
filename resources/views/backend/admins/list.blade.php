@@ -30,7 +30,7 @@
                                 <h3 class="card-title">Danh sách group</h3>
                             </div>
                             <div class="col-4">
-                                <a href="{{ route('user.add') }}" class="btn btn-block btn-primary btn-lg">Thêm mới</a>
+                                <a href="{{ route('admins.add') }}" class="btn btn-block btn-primary btn-lg">Thêm mới</a>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                           
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -112,7 +112,7 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
-
+    
   });
 </script>
 @endsection

@@ -30,5 +30,8 @@ class CreateUserPermissionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('user_permissions');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('full_name');
+      });
     }
 }
