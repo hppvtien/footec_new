@@ -1,6 +1,7 @@
 @extends('backend.layouts.app')
 @section('action','Thêm mới')
 @section('content')
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -71,29 +72,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
+
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="user_name">User name</label>
-                                            <input type="text" class="form-control" id="user_name" name="user_name"
-                                                   placeholder="Nhập tên user">
+                                            <label for="active_time">Date and time:</label>
+                                            <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                                <input type="text" class="form-control datetimepicker-input" name="active_time" id="active_time" data-target="#reservationdatetime"/>
+                                                <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="active_time">Active time</label>
-                                            <input type="text" class="form-control" id="active_time" name="active_time"
-                                                   placeholder="Kích hoạt">
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="ukey">Ukey</label>
-                                            <input type="text" class="form-control" id="ukey" name="ukey"
-                                                   placeholder="Nhập ukey">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-4">
                                         <label for="exampleInputEmail1">Is Active</label>
                                         <div class="checkbox">
@@ -108,18 +98,41 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
+                                            <label for="ukey">Ukey</label>
+                                            <input type="text" class="form-control" id="ukey" name="ukey"
+                                                   placeholder="Nhập ukey">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-4">
+                                        <div class="form-group">
                                             <label for="invite_id">Invite</label>
                                             <input type="text" class="form-control" id="invite_id" name="invite_id"
                                                    placeholder="Nhập ID người mời">
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="created_user"></label>
-                                            <input type="text" class="form-control" id="created_user" name="created_user" hidden
-                                                   placeholder="Nhập người lập">
+                                        <label for="exampleInputEmail1">Permissions</label>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="perms" value="view">Xem
+                                            </label>
+
+                                            <label>
+                                                <input type="checkbox" name="perms" value="add">Thêm
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="perms" value="edit">Sửa
+                                            </label>
+
+                                            <label>
+                                                <input type="checkbox" name="perms" value="delete">Xóa
+                                            </label>
                                         </div>
                                     </div>
+
                                 </div>
 
 
@@ -128,7 +141,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                <button type="button" id="submit" class="btn btn-primary">Lưu lại</button>
                             </div>
                         </form>
                     </div>
@@ -143,17 +156,17 @@
         $(document).ready(function() {
             $('#submit').click(function() {
                 var token = $('meta[name="csrf-token"]').attr('content');
-                let user_name = $('select[name=user_name]').val();
-                let age = $('select[name=age]').val();
-                let gender = $('select[name=gender]').val();
-                let phone = $('select[name=phone]').val();
-                let active_time = $('select[name=active_time]').val();
-                let ukey = $('select[name=ukey]').val();
-                let is_active = $('select[name=is_active]').val();
-                let invite_id = $('select[name=invite_id]').val();
-                let created_id = $('select[name=created_id]').val();
+                let user_name = $('input[name=user_name]').val();
+                let password = $('input[name=password]').val();
+                let full_name = $('input[name=full_name]').val();
+                let age = $('input[name=age]').val();
+                let gender = $('input[name=gender]').val();
+                let phone = $('input[name=phone]').val();
+                let active_time = $('input[name=active_time]').val();
+                let ukey = $('input[name=ukey]').val();
+                let is_active = $('input[name=is_active]').val();
+                let invite_id = $('input[name=invite_id]').val();
                 let perms = [];
-                console.log(is_active);return false;
                 $.each($("input[name='perms']:checked"), function() {
                     perms.push($(this).val());
                 });
@@ -166,6 +179,7 @@
                     dataType: "json",
                     data: {
                         user_name: user_name,
+                        password: password,
                         full_name: full_name,
                         age: age,
                         gender: gender,
@@ -174,12 +188,11 @@
                         ukey: ukey,
                         is_active: is_active,
                         invite_id: invite_id,
-                        created_id: created_id,
                         perms: perms
                     },
                     success: function(data) {
                         alert('Thêm mới thành công!!!')
-                        window.location.href = "{{ route('user_pers.list') }}";
+                        window.location.href = "{{ route('user.list') }}";
                     }
                 });
             });

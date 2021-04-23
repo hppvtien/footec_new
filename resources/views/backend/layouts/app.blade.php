@@ -23,14 +23,14 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('public/backend/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
-    
+
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
 
 
- 
+
     <!-- <link rel="stylesheet" href="{{ asset('public/backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"> -->
     <!-- overlayScrollbars -->
-    
+
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- dataTables -->
     <link rel="stylesheet" href="{{ asset('public/backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
@@ -217,7 +217,7 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-   
+
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('public/backend/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -239,18 +239,29 @@
     <script src="{{ asset('public/backend/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('public/backend/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
+
     <script src="{{ asset('public/backend/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Summernote -->
     <script src="{{ asset('public/backend/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
-    
+
     <script src="{{ asset('public/backend/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('public/backend/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('public/backend/dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    
+    <script>
+      $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    </script>
 </body>
 
 </html>

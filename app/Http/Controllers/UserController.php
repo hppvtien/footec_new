@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\users;
+use App\Models\User;
 use DataTables;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
+    protected function messages()
+    {
+        return [
+            'name.required' => 'Tiêu đề không được bỏ trống.', 
+            'slug.required' => 'Đường dẫn tĩnh không được bỏ trống.',
+        ];
+    }
     public function index(Request $request)
     {
-
         if ($request->ajax()) {
-            $data = Users::get();
+            $data = User::get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($data){
+                ->addColumn('action', function ($data) {
                     $actionBtn = '<a href="' . route('user.edit', $data->id) . '" class="edit btn btn-success btn-sm">Edit</a>
                     <a href="' . route('user.delete', $data->id) . '" class="delete btn btn-danger btn-sm">Delete</a>';
                     return $actionBtn;
@@ -25,55 +33,84 @@ class UserController extends Controller
         }
         return view('backend.users.list');
     }
+
     public function addGetUser()
     {
-        // $user = users::where('is_active',1)->get()->pluck('name','id');
-        // return view('backend.users.add',compact('user'));
-        // $user = users::where('is_active',1)->get()->pluck('name','id');
         return view('backend.users.add');
     }
-
-    // Store Contact Form data
     public function addPostUser(Request $request)
     {
-        // $data = $request;
-        // Form validation
-        $this->validate($request, [
-            'user_id' => 'required',
-            'model_name' => 'required',
-        ]);
+        $user_id = Auth::user();
+     
+        $this->validate($request,
+            [
+                'user_name'  => 'required',
+                'password' => 'required',
+                'phone'  => 'required',
+                
+            ],
+            [
+                'user_name'           => 'User namememememe',
+                'password' => 'passwordddddddddđ',
+                'phone'           => 'Phonenenenene',
+                
+            ]
+        );
+       
         $data = [
-            'user_id' => $request->user_id,
-            'model_name' => $request->model_name,
+            'user_name' => $request->user_name,
+            'password' => md5($request->password),
+            'full_name' => $request->full_name,
+            'age' => $request->age,
+            'gender' => $request->gender,
+            'phone' => $request->phone,
+            'active_time' => date('Y-m-d H:i:s' , strtotime($request->active_time)),
+        
+            'ukey' => $request->ukey,
+            'is_active' => $request->is_active,
+            'invite_id' => $request->invite_id,
+            'created_user' => 1,
             'perms' => json_encode($request->perms),
+            'verify_info' => '1'
         ];
-        Users::create($data);
-            return redirect()->route('user_pers.list');
+        User::create($data);
+        return redirect()->route('user.list');
     }
 
     public function editGetUser($id)
     {
-        // $group = groups::where('is_active',1)->get()->pluck('name','id');
-        $Users = Users::first();
-// dd(json_decode($group_permissions->perms));
-        return view('backend.users.edit', compact('users'));
+        $user = User::first();
+        return view('backend.users.edit', compact('user'));
     }
+
     public function editPostUser(Request $request, $id)
     {
 
-        $data = Users::where('id', $id)->first();
-        $data->model_name = $request->model_name;
-        $data->perms = json_encode($request->perms);
-        $data->user_id = $request->user_id;
+        $data = User::where('id', $id)->first();
+        $data->user_name = $request->user_name;
+            $data->password = md5($request->password);
+            $data->full_name = $request->full_name;
+            $data->age = $request->age;
+            $data->gender = $request->gender;
+            $data->phone = $request->phone;
+            $data->active_time = date('Y-m-d H:i:s' , strtotime($request->active_time));
+            $data->ukey = $request->ukey;
+            $data->is_active = $request->is_active;
+            $data->invite_id = $request->invite_id;
+            $data->created_user = 1;
+            $data->verify_info = '1';
+
+
         $data->updated_at = Carbon::now();
         // dd($request->is_active);
         $data->save();
 
         return redirect()->route('user.list');
     }
+
     public function deleteUser($id)
     {
-        Users::destroy($id);
+        User::destroy($id);
         return redirect()->route('user.list');
 
     }
