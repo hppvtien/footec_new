@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2021 at 11:49 AM
+-- Generation Time: Apr 26, 2021 at 11:54 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -34,6 +34,13 @@ CREATE TABLE `admins` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `user_name`, `full_name`, `created_at`, `updated_at`) VALUES
+(1, 'tienpv', 'Tien Van Pham', '2021-04-21 18:43:38', '2021-04-21 18:52:14');
 
 -- --------------------------------------------------------
 
@@ -95,20 +102,27 @@ CREATE TABLE `group_permissions` (
 --
 
 INSERT INTO `group_permissions` (`id`, `group_id`, `model_name`, `perms`, `created_at`, `updated_at`) VALUES
-(1, 8, 'California', '[\"view\",\"add\",\"edit\",\"delete\"]', '2021-04-19 23:20:40', '2021-04-20 02:25:38'),
+(1, 8, 'Alabama', '[\"view\",\"add\",\"edit\"]', '2021-04-19 23:20:40', '2021-04-21 18:20:57'),
 (2, 5, 'Alaska', '[\"view\",\"add\",\"edit\",\"delete\"]', '2021-04-19 23:23:11', '2021-04-19 23:23:11');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group_user`
+-- Table structure for table `group_users`
 --
 
-CREATE TABLE `group_user` (
+CREATE TABLE `group_users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `group_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `group_users`
+--
+
+INSERT INTO `group_users` (`id`, `group_id`, `user_id`) VALUES
+(1, 1, 20);
 
 -- --------------------------------------------------------
 
@@ -134,7 +148,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2021_04_15_093040_create_group_user_table', 2),
 (6, '2021_04_15_093513_create_admins_table', 3),
 (7, '2021_04_15_093654_create_group_permissions_table', 4),
-(8, '2021_04_15_094050_create_user_permissions_table', 5);
+(8, '2021_04_15_094050_create_user_permissions_table', 5),
+(9, '2021_04_22_031445_add_store_id_to_users_table', 6),
+(10, '2021_04_22_070245_create_user_name', 7);
 
 -- --------------------------------------------------------
 
@@ -147,6 +163,13 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('hppvtien@gmail.com', '$2y$10$fqfUnPopC87h4YPkO/gmHeFdcaiNdtIjlCezbwIY4qbxnXU6xYM4S', '2021-04-25 23:57:47');
 
 -- --------------------------------------------------------
 
@@ -167,11 +190,18 @@ CREATE TABLE `sessions` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `user_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `age` int(11) NOT NULL,
+  `gender` tinyint(1) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `ukey` int(11) NOT NULL,
+  `verify_info` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `invite_id` int(11) NOT NULL,
+  `created_user` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -180,8 +210,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Dat Nguyen', 'hppvtien@gmail.com', NULL, '$2y$10$zHdZq/aRFFWg7TSOQnHMm.qm3NQzyGkHoJoaQnlEmMm8vpgVDqRH6', NULL, '2021-04-15 02:23:23', '2021-04-15 02:23:23');
+INSERT INTO `users` (`id`, `user_name`, `full_name`, `password`, `active_time`, `age`, `gender`, `phone`, `ukey`, `verify_info`, `is_active`, `invite_id`, `created_user`, `created_at`, `updated_at`) VALUES
+(1, 'tienpv', 'pham tien', '$2y$10$zHdZq/aRFFWg7TSOQnHMm.qm3NQzyGkHoJoaQnlEmMm8vpgVDqRH6', '2021-04-26 07:02:40', 11, 1, 969938801, 5802, 1, 1, 1111, 1, '2021-04-09 07:10:22', '2021-04-23 01:03:15');
 
 -- --------------------------------------------------------
 
@@ -197,6 +227,14 @@ CREATE TABLE `user_permissions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_permissions`
+--
+
+INSERT INTO `user_permissions` (`id`, `user_id`, `model_name`, `perms`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Delaware', '[\"view\",\"add\",\"edit\",\"delete\"]', '2021-04-21 19:18:49', '2021-04-21 19:48:36'),
+(2, 2, 'California', '[\"view\",\"add\",\"edit\"]', '2021-04-21 19:48:54', '2021-04-21 19:48:54');
 
 --
 -- Indexes for dumped tables
@@ -228,9 +266,9 @@ ALTER TABLE `group_permissions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group_user`
+-- Indexes for table `group_users`
 --
-ALTER TABLE `group_user`
+ALTER TABLE `group_users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -249,8 +287,7 @@ ALTER TABLE `password_resets`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_permissions`
@@ -266,7 +303,7 @@ ALTER TABLE `user_permissions`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -287,28 +324,28 @@ ALTER TABLE `group_permissions`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `group_user`
+-- AUTO_INCREMENT for table `group_users`
 --
-ALTER TABLE `group_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `group_users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `user_permissions`
 --
 ALTER TABLE `user_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
