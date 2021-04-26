@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\groups;
+use App\Models\group_user;
 use DataTables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +38,9 @@ class UserController extends Controller
 
     public function addGetUser()
     {
-        return view('backend.users.add');
+        $group_user = Group_user::get();
+        $group = Groups::get();
+        return view('backend.users.add',compact('group_user','group'));
     }
     public function addPostUser(Request $request)
     {
@@ -65,16 +69,25 @@ class UserController extends Controller
             'gender' => $request->gender,
             'phone' => $request->phone,
             'active_time' => date('Y-m-d H:i:s' , strtotime($request->active_time)),
-        
             'ukey' => $request->ukey,
             'is_active' => $request->is_active,
             'invite_id' => $request->invite_id,
-            'created_user' => 1,
+            'created_user' => $user_id->id,
             'perms' => json_encode($request->perms),
             'verify_info' => '1'
         ];
-        User::create($data);
+        $insert_User = User::create($data);
+        if($insert_User){
+            $data_group_user = [
+                'group_id' => ($request->group_id) ? $request->group_id : 0,
+                'user_id' => $insert_User->id,
+            ];
+            group_user::create($data_group_user);
+        } 
         return redirect()->route('user.list');
+       
+        // dd($insert_User->id);
+        
     }
 
     public function editGetUser($id)

@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 @section('action','Sửa')
 @section('content')
-@include('flash::message')
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -24,15 +23,7 @@
                                         <input type="text" class="form-control" id="user_name" name="user_name" value="{{ $user->user_name }}" placeholder="Nhập tên user">
                                     </div>
                                 </div>
-                                @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
+
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="password">Password</label>
@@ -109,7 +100,18 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-4">
+                                    <label for="exampleInputEmail1">Permissions</label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="pers" value="1" {{ ($user->pers == 1)? 'checked':'' }}>On
+                                        </label>
 
+                                        <label>
+                                            <input type="checkbox" name="pers" value="0" {{ ($user->pers == 0)? 'checked':'' }}>Off
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="invite_id">Invite</label>

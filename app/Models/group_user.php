@@ -9,4 +9,5 @@ class group_user extends Model
 {
     use HasFactory;
     public $fillable = ['group_id', 'user_id'];
+    public $timestamps = false;
 }

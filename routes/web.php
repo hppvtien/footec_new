@@ -22,9 +22,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/home', function () {
     return view('backend.layouts.app');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('home');
 
 // Route::get('/groupsadd', function () {
 //     return view('groupsadd');
