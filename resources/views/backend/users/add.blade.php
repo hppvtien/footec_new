@@ -49,11 +49,11 @@
                                         <label for="exampleInputEmail1">Gender</label>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="gender" value="1">
+                                                <input type="radio" name="gender" value="1">
                                                 Male</label>
 
                                             <label>
-                                                <input type="checkbox" name="gender" value="0">
+                                                <input type="radio" name="gender" value="0">
                                                 Female</label>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <!-- <div class="col-4">
                                     <label for="exampleInputEmail1">Is Active</label>
                                     <div class="checkbox">
                                         <label>
@@ -90,11 +90,17 @@
                                             <input type="checkbox" name="is_active" value="0">Off
                                         </label>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="ukey">Ukey</label>
                                         <input type="text" class="form-control" id="ukey" name="ukey" placeholder="Nhập ukey">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="invite_id">Invite</label>
+                                        <input type="text" class="form-control" id="invite_id" name="invite_id" placeholder="Nhập ID người mời">
                                     </div>
                                 </div>
                             </div>
@@ -102,11 +108,29 @@
 
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="invite_id">Invite</label>
-                                        <input type="text" class="form-control" id="invite_id" name="invite_id" placeholder="Nhập ID người mời">
+                                        <label>Groups</label>
+                                        <select class="custom-select form-control-border border-width-2" name="group_id" data-placeholder="Chọn model name" style="width: 100%;">
+                                            <option value="0" disabled selected>Chọn Group</option>
+                                            @foreach($group as $key => $item)
+                                            <option value="{{ $item->id }}">{{$item->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-4">
+                                    <label>Trạng thái</label><br>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label" for="rd_active">
+                                            <input type="radio" class="form-check-input" id="rd_active" value="1" name="rd_active">Active
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label" for="rd_notactive">
+                                            <input type="radio" class="form-check-input" id="rd_notactive" value="0" name="rd_active">Not Active
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-4">
                                     <label for="exampleInputEmail1">Permissions</label>
                                     <div class="checkbox">
                                         <label>
@@ -124,44 +148,77 @@
                                             <input type="checkbox" name="perms" value="delete">Xóa
                                         </label>
                                     </div>
-                                </div>
-
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Multiple</label>
-                                        <select class="custom-select form-control-border border-width-2" name="groupUser_id" data-placeholder="Chọn model name" style="width: 100%;">
-                                            <option value="0" disabled selected>Chọn Group</option>
-                                            @foreach($group_user as $key => $item)
-                                            <option value="{{ $item->id }}">{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
+                                </div> -->
                             </div>
+                            <hr>
                             <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Groups</label>
-                                        <select class="custom-select form-control-border border-width-2" name="group_id" data-placeholder="Chọn model name" style="width: 100%;">
-                                            <option value="0" disabled selected>Chọn Group</option>
-                                            @foreach($group as $key => $item)
-                                            <option value="{{ $item->id }}">{{$item->name}}</option>
-                                            @endforeach
-                                        </select>
+                                <div class="role_item col-lg-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="checkbox">
+                                                <label for="news_permission">
+                                                    <input type="checkbox" name="model_name" value="news_permission" id="news_permission" class="category_tb">
+                                                    Danh mục bài viết </label>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-news_permission" value="view" class="checkboxaddhantblarticle_category">
+                                                    Xem</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-news_permission" value="add" class="checkboxaddhantblarticle_category">
+                                                    Thêm</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-news_permission" value="edit" class="checkboxedithantblarticle_category">
+                                                    Sửa</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-news_permission" value="delete" class="checkboxxoahantblarticle_category">
+                                                    Xóa</label>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label" for="rd_active">
-                                            <input type="radio" class="form-check-input" id="rd_active" name="rd_active" checked>Active
-                                        </label>
+                                <div class="role_item col-lg-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="checkbox">
+                                                <label for="product_permission">
+                                                    <input type="checkbox" name="model_name" value="product_permission" id="product_permission" class="category_tb">
+                                                    Danh mục sản phẩm </label>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-product_permission" value="view" class="checkboxaddhantblarticle_category">
+                                                    Xem</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-product_permission" value="add" class="checkboxaddhantblarticle_category">
+                                                    Thêm</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-product_permission" value="edit" class="checkboxedithantblarticle_category">
+                                                    Sửa</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="perms-product_permission" value="delete" class="checkboxxoahantblarticle_category">
+                                                    Xóa</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label" for="rd_notactive">
-                                            <input type="radio" class="form-check-input" id="rd_notactive" name="rd_active">Not Active
-                                        </label>
-                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
                             </div>
 
@@ -184,54 +241,103 @@
 </section>
 <script>
     $(document).ready(function() {
-        $('#submit').click(function() {
-            var token = $('meta[name="csrf-token"]').attr('content');
-            let user_name = $('input[name=user_name]').val();
-            let password = $('input[name=password]').val();
-            let full_name = $('input[name=full_name]').val();
-            let age = $('input[name=age]').val();
-            let gender = $('input[name=gender]').val();
-            let phone = $('input[name=phone]').val();
-            let active_time = $('input[name=active_time]').val();
-            let ukey = $('input[name=ukey]').val();
-            let is_active = $('input[name=is_active]').val();
-            let invite_id = $('input[name=invite_id]').val();
-            let groupUser_id = $('select[name=groupUser_id]').val();
-            let group_id = $('select[name=group_id]').val();
-            let rd_active = $('select[name=rd_active]').val();
-            let perms = [];
-            $.each($("input[name='perms']:checked"), function() {
-                perms.push($(this).val());
-            });
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ route('user.add') }}",
-                type: "post",
-                dataType: "json",
-                data: {
-                    user_name: user_name,
-                    password: password,
-                    full_name: full_name,
-                    age: age,
-                    gender: gender,
-                    phone: phone,
-                    active_time: active_time,
-                    ukey: ukey,
-                    is_active: is_active,
-                    invite_id: invite_id,
-                    perms: perms,
-                    groupUser_id: groupUser_id,
-                    group_id: group_id,
-                    rd_active: rd_active
-                },
-                success: function(data) {
-                    alert('Thêm mới thành công!!!')
-                    window.location.href = "{{ route('user.list') }}";
+
+
+        
+            $('.category_tb').click(function() {
+                let cat_name = $(this).attr('id');
+               
+                if ($('input[name="perms-' + cat_name + '"]:checked')) {
+                    var data = {
+                        cat_name: []
+                    };
+                    $('input[name="perms-' + cat_name + '"]:checked').each(function() {
+                        data['cat_name'].push($(this).val());
+                    });
+                    console.log(data);
+                return false;
                 }
+                
             });
-        });
+
+
+      
+
+
     });
+    //     $('#submit').click(function() {
+    //         var token = $('meta[name="csrf-token"]').attr('content');
+    //         let user_name = $('input[name=user_name]').val();
+    //         let password = $('input[name=password]').val();
+    //         let full_name = $('input[name=full_name]').val();
+    //         let age = $('input[name=age]').val();
+    //         let gender = $('input[name=gender]').val();
+    //         let phone = $('input[name=phone]').val();
+    //         let active_time = $('input[name=active_time]').val();
+    //         let ukey = $('input[name=ukey]').val();
+    //         let is_active = $('input[name=is_active]').val();
+    //         let invite_id = $('input[name=invite_id]').val();
+    //         let groupUser_id = $('select[name=groupUser_id]').val();
+    //         let group_id = $('select[name=group_id]').val();
+    //         let rd_active = $('input[name=rd_active]:checked').val();
+    //         // let model_name = $("input[name='model_name']:checked").val();
+    //         var group_perms = {
+    //             'abc': []
+    //         };
+    //         var data = {
+    //             'perms-product_permission[]': []
+    //         };
+    //         $('input[name="perms-product_permission[]"]:checked').each(function() {
+    //             data['perms-product_permission[]'].push($(this).val());
+    //         });
+    //         var data = {
+    //             'perms-news_permission[]': []
+    //         };
+    //         $('input[name="perms-news_permission[]"]:checked').each(function() {
+    //             data['perms-news_permission[]'].push($(this).val());
+    //         });
+    //         group_perms['abc'].push(data);
+    //         console.log(group_perms);
+    //         return false;
+    //         // let md_name = [];
+
+    //         $.each($("input[name='model_name']:checked"), function() {
+    //             let perms = [];
+    //             $.each($("input[name='perms-product_permission[]']:checked"), function() {
+    //                 perms.push($(this).val());
+    //             });
+    //             md_name.push(perms);
+    //         });
+
+    //         $.ajax({
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             },
+    //             url: "{{ route('user.add') }}",
+    //             type: "post",
+    //             dataType: "json",
+    //             data: {
+    //                 user_name: user_name,
+    //                 password: password,
+    //                 full_name: full_name,
+    //                 age: age,
+    //                 gender: gender,
+    //                 phone: phone,
+    //                 active_time: active_time,
+    //                 ukey: ukey,
+    //                 is_active: is_active,
+    //                 invite_id: invite_id,
+    //                 perms: perms,
+    //                 groupUser_id: groupUser_id,
+    //                 group_id: group_id,
+    //                 rd_active: rd_active
+    //             },
+    //             success: function(data) {
+    //                 alert('Thêm mới thành công!!!')
+    //                 window.location.href = "{{ route('user.list') }}";
+    //             }
+    //         });
+    //     });
+    // });
 </script>
 @endsection
